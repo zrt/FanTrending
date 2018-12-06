@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Fan Trending</title>
+    <meta name="description" content="Fan Trending"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./css1.css">
+    <script type="text/javascript" src="https://enj0.com/static/jquery.min.js"></script>  
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Fan Trending</h1>
+      
+    </section>
+
+    <section class="main-content">
+
+      <div id="views"></div>
+      <h1 >添加关键词</h1>
+      <p>token正确会被立即添加，token不正确将人工审核后添加</p>
+      <p>
+        <ul>
+          <li>
+            关键词: <input type="text" name="word" id="sw"> 
+          </li>
+          <li>
+            Token: <input type="text" name="token" id="st">
+          </li><li>
+            <button onclick="submit()" id="btn"> 提交! </button>
+          </li>
+        </ul>
+      </p>
+    </section>
+
+  <script type="text/javascript">
+    function submit(){
+      serverUrl = 'http://localhost:12233/'
+      word = $('#sw').val()
+      token = $('#st').val()
+      $('#btn').text('已发送,正在处理...')
+      $.get(serverUrl + 'newword?w='+word+'&t='+token, function(data,status){
+        alert(data)
+      })
+    }
+    
+  </script>
+	<footer class="site-footer">
+        
+        <span class="site-footer-credits" style="margin-left:50px;">Made by  <a href="https://blog.zrt.io/">Ruotian Zhang</a>.</span>
+      </footer>    
+  </body>
+</html>
+
+
