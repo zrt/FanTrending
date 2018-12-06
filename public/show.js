@@ -14,17 +14,19 @@ function showFanTrending(word){
 		var oneDay = 24 * 3600 * 1000;
 		var data = [];
 		var now = new Date(base);
+		var mx = 0
 		for(var i=1; i<=datalist.length;i++){
 			var dayStr = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('-');
 			data.push([dayStr, datalist[datalist.length-i]]);
 			var now = new Date(base -= oneDay);
+			mx =Math.max(datalist[datalist.length-i],mx)
 		}
 		
 		option = {
 		    animation: true,
 		    title: {
 		        left: 'left',
-		        text: 'FanTrending of '+word,
+		        text: 'FanTrending of '+word+'  (max:'+mx+')',
 		        subtext: '与"'+word+'"相关的饭否"七日年化"数量',
 		    },
 		    legend: {
