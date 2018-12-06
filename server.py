@@ -5,8 +5,7 @@ import io
 import json
 import re,random,string
 import base64
-import torch
-import control
+import control,pickle
 
 from flask import Flask, request, abort, render_template, send_file
 from flask_cors import CORS
@@ -20,10 +19,14 @@ state = {}
 newwords = []
 
 def get_wordlist():
-    return torch.load('./wordlist.pkl')
+    with open('./wordlist.pkl', 'rb') as f:
+        w = pickle.load(f)
+    return w
 
 def get_state():
-    return torch.load('./state.pkl')
+    with open('./state.pkl', 'rb') as f:
+        s = pickle.load(f)
+    return s
 
 @app.route('/gettrending', methods=['GET'])
 def gettrending():

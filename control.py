@@ -1,4 +1,4 @@
-import requests, torch
+import requests, pickle
 from config import config
 from van import Fan
 import datetime
@@ -20,17 +20,23 @@ def get_today_num():
     return int(datetime.datetime.today().strftime('%j'))
 
 def save_all():
-    torch.save(wordlist,'./wordlist.pkl')
-    torch.save(state,'./state.pkl')
-    torch.save(mem,'./mem.pkl')
+    with open('./wordlist.pkl', 'wb') as f:
+        pickle.dump(wordlist,f,True)
+    with open('./state.pkl', 'wb') as f:
+        pickle.dump(state,f,True)
+    with open('./mem.pkl', 'wb') as f:
+        pickle.dump(mem,f,True)
 
 def load_all():
     global wordlist
-    wordlist = torch.load('./wordlist.pkl')
+    with open('./wordlist.pkl', 'rb') as f:
+        wordlist = pickle.load(f)
     global state
-    state = torch.load('./state.pkl')
+    with open('./state.pkl', 'rb') as f:
+        state = state.load(f)
     global mem
-    mem = torch.load('./mem.pkl')
+    with open('./mem.pkl', 'rb') as f:
+        mem = mem.load(f)
 
 def QiRiNianHua(seq):
     ret = [0]*370
