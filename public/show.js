@@ -151,25 +151,45 @@ function selectChange(){
 	var selectValue = $("#sel").val()
 	console.log(selectValue)
 	if (selectValue !== 'random'){
+		var newUrl = changeURLArg(window.location.href,'w',wordlist[parseInt(selectValue)])
+		var stateObject = {};
+		var title = "change address"
+		history.pushState(stateObject, title, newUrl);
 		showFanTrending(wordlist[parseInt(selectValue)])
 	}
 }
-function GetQueryString(name)
-{
-     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r = window.location.search.substr(1).match(reg);
-     if(r!=null)return  unescape(r[2]); return null;
+
+function changeURLArg(url,arg,arg_val){
+    var pattern=arg+'=([^&]*)';
+    var replaceText=arg+'='+arg_val; 
+    if(url.match(pattern)){
+        var tmp='/('+ arg+'=)([^&]*)/gi';
+        tmp=url.replace(eval(tmp),replaceText);
+        return tmp;
+    }else{ 
+        if(url.match('[\?]')){ 
+            return url+'&'+replaceText; 
+        }else{ 
+            return url+'?'+replaceText; 
+        } 
+    }
 }
 
+function getQueryString(key){
+  var reg = new RegExp("(^|&)"+key+"=([^&]*)(&|$)");
+  var result = window.location.search.substr(1).match(reg);
+  return result?decodeURIComponent(result[2]):null;
+}
 $(function(){
 	$.get(serverUrl + 'getlist', function(data,status){
 		wordlist = JSON.parse(data)
 		addSel(wordlist)
 		$("#sel").change(function() { selectChange(); });
-		var myw=GetQueryString("w");
+		var myw=getQueryString("w");
 		if(myw !=null && myw.toString().length>1)
 		{
-		   showFanTrending(myw)
+			console.log('arg '+(myw))
+		   showFanTrending((myw))
 		}else showFanTrending(wordlist[selectFrom(wordlist.length)])
 	})
 

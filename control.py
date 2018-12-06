@@ -1,3 +1,5 @@
+# encoding=utf-8
+
 import requests, pickle
 from config import config
 from van import Fan
@@ -33,10 +35,10 @@ def load_all():
         wordlist = pickle.load(f)
     global state
     with open('./state.pkl', 'rb') as f:
-        state = state.load(f)
+        state = pickle.load(f)
     global mem
     with open('./mem.pkl', 'rb') as f:
-        mem = mem.load(f)
+        mem = pickle.load(f)
 
 def QiRiNianHua(seq):
     ret = [0]*370
@@ -88,7 +90,7 @@ def update_all():
 #     global mem
 #     mem = {}
     for w in wordlist:
-        print(w)
+        # print(w)
         update(w)
     save_all()
 

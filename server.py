@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# encoding=utf-8
 
 import os
 import io
@@ -31,7 +31,7 @@ def get_state():
 @app.route('/gettrending', methods=['GET'])
 def gettrending():
     w = request.args.get('w', '')
-    print(w)
+    # print(w)
 
     if w not in wordlist:
         abort(403)
@@ -67,7 +67,7 @@ def newword():
         abort(403)
         return 
     t = request.args.get('t', '')
-    print('+',w)
+    print('+')
     if t != webtoken:
         newwords.append(w)
         return '已记录,待审核'
