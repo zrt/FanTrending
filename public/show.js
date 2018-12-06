@@ -26,7 +26,7 @@ function showFanTrending(word){
 		    animation: true,
 		    title: {
 		        left: 'left',
-		        text: 'FanTrending of '+word+'  (max:'+mx+')',
+		        text: 'FanTrending of 「'+word+'」 (max:'+mx+')',
 		        subtext: '与"'+word+'"相关的饭否"七日年化"数量',
 		    },
 		    legend: {
