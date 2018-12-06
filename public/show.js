@@ -1,4 +1,4 @@
-serverUrl = 'http://localhost:12233/'
+serverUrl = 'https://fantrending.enj0.com/'
 wordlist = []
 
 function showFanTrending(word){
