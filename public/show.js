@@ -154,13 +154,23 @@ function selectChange(){
 		showFanTrending(wordlist[parseInt(selectValue)])
 	}
 }
+function GetQueryString(name)
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
 
 $(function(){
 	$.get(serverUrl + 'getlist', function(data,status){
 		wordlist = JSON.parse(data)
 		addSel(wordlist)
 		$("#sel").change(function() { selectChange(); });
-		showFanTrending(wordlist[selectFrom(wordlist.length)])
+		var myw=GetQueryString("w");
+		if(myw !=null && myw.toString().length>1)
+		{
+		   showFanTrending(myw)
+		}else showFanTrending(wordlist[selectFrom(wordlist.length)])
 	})
 
 });
