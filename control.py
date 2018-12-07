@@ -12,6 +12,8 @@ wordlist = {}
 state = {}
 mem = {}
 
+t_out = (60,60)
+
 def datetimefromstr(s):
     return datetime.datetime.strptime(s, '%a %b %d %H:%M:%S %z %Y')
 
@@ -70,12 +72,12 @@ def update(word):
     if 'lastid' not in mem[word]:
         mem[word]['lastid'] = -1
     lastid = mem[word]['lastid']
-    latest = fan.request('GET', 'search/public_timeline', {'q':word, 'count':60})
+    latest = fan.request('GET', 'search/public_timeline', {'timeout':t_out,'q':word, 'count':60})
     cnt = 200
     while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and datetimefromstr(latest[-1]['created_at']).year >= 2018:
         cnt -= 1
         print(200-cnt)
-        latest += fan.request('GET', 'search/public_timeline', {'q':word, 'count':60, 'max_id':latest[-1]['id']})[1:]
+        latest += fan.request('GET', 'search/public_timeline', {'timeout':t_out, 'q':word, 'count':60, 'max_id':latest[-1]['id']})[1:]
     
     for x in latest:
         if x['rawid']> lastid:
