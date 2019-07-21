@@ -49,7 +49,7 @@ ADD_LOCK = False
 def do_update():
     global ADD_LOCK
     ADD_LOCK = True
-    control.update()
+    control.update_all()
     global wordlist
     wordlist = get_wordlist()
     global state

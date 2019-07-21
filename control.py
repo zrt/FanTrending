@@ -110,7 +110,7 @@ def addword(w):
     load_all()
     if w in wordlist:
     	return
-    update_all()
     wordlist.append(w)
     save_all()
+    update_all()
 
