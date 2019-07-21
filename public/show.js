@@ -2,6 +2,7 @@ serverUrl = './'
 wordlist = []
 
 function showFanTrending(word){
+	word = decodeURIComponent(word)
 	console.log('show '+word)
 	$.get(serverUrl + 'show?w='+word, function(data,status){
 		datalist = JSON.parse(data)

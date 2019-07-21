@@ -89,7 +89,7 @@ def update(word):
     for x in latest:
         if x['rawid']> lastid:
             mem[word]['status'].append(x['created_at'])
-    while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and get_today_num() - get_day_num(latest[-1]['created_at']) < 360:
+    while cnt > 0 and len(latest)>1 and latest[-1]['rawid'] > lastid and get_today_num() - get_day_num(latest[-1]['created_at']) < 360:
         cnt -= 1
         print('get..', 1000-cnt)
         latest = fan.request('GET', 'search/public_timeline', { 'q':word, 'count':60, 'max_id':latest[-1]['id']}, timeout=t_out)[1:]
