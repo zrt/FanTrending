@@ -10,6 +10,7 @@ from threading import Thread
 from flask import Flask, request, abort, render_template, send_file, send_from_directory
 from flask_cors import CORS
 from config import config
+import traceback
 
 
 webtoken = config['webtoken']
@@ -52,7 +53,8 @@ def do_update():
     try:
         control.update_all()
     except Exception as e:
-        print(e)
+        traceback.print_exc()
+        return
     
     global wordlist
     wordlist = get_wordlist()
@@ -89,8 +91,9 @@ def do_addword(w):
     try:
         control.addword(w)
     except Exception as e:
-        print(e)
-        
+        traceback.print_exc()
+        return
+
     global wordlist
     wordlist = get_wordlist()
     global state

@@ -84,18 +84,20 @@ def update(word):
     lastid = mem[word]['lastid']
     latest = fan.request('GET', 'search/public_timeline', {'q':word, 'count':60}, timeout=t_out)
     cnt = 1000
-    while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and get_today_num() - get_day_num(latest[-1]['created_at']) < 360:
-        cnt -= 1
-        print('get..', 1000-cnt)
-        latest += fan.request('GET', 'search/public_timeline', { 'q':word, 'count':60, 'max_id':latest[-1]['id']}, timeout=t_out)[1:]
-    
+    if len(latest)>0:
+        mem[word]['lastid'] = latest[0]['rawid']
     for x in latest:
         if x['rawid']> lastid:
             mem[word]['status'].append(x['created_at'])
-    if len(latest)>0:
-        mem[word]['lastid'] = latest[0]['rawid']
-    mem[word]['lastupdate'] = get_today_num()
+    while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and get_today_num() - get_day_num(latest[-1]['created_at']) < 360:
+        cnt -= 1
+        print('get..', 1000-cnt)
+        latest = fan.request('GET', 'search/public_timeline', { 'q':word, 'count':60, 'max_id':latest[-1]['id']}, timeout=t_out)[1:]
+        for x in latest:
+            if x['rawid']> lastid:
+                mem[word]['status'].append(x['created_at'])
     
+    mem[word]['lastupdate'] = get_today_num()
     state[word] = calc_state(word, mem[word]['status'])
     
 def update_all():
