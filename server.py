@@ -49,7 +49,11 @@ ADD_LOCK = False
 def do_update():
     global ADD_LOCK
     ADD_LOCK = True
-    control.update_all()
+    try:
+        control.update_all()
+    except Exception as e:
+        print(e)
+    
     global wordlist
     wordlist = get_wordlist()
     global state
@@ -82,7 +86,11 @@ def viewnewword():
 def do_addword(w):
     global ADD_LOCK
     ADD_LOCK = True
-    control.addword(w)
+    try:
+        control.addword(w)
+    except Exception as e:
+        print(e)
+        
     global wordlist
     wordlist = get_wordlist()
     global state

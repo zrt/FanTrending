@@ -92,7 +92,8 @@ def update(word):
     for x in latest:
         if x['rawid']> lastid:
             mem[word]['status'].append(x['created_at'])
-    mem[word]['lastid'] = latest[0]['rawid']
+    if len(latest)>0:
+        mem[word]['lastid'] = latest[0]['rawid']
     mem[word]['lastupdate'] = get_today_num()
     
     state[word] = calc_state(word, mem[word]['status'])
