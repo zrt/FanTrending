@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
-    <title>Fan Trending</title>
-    <meta name="description" content="Fan Trending"/>
+    <link rel="shortcut icon" href="https://static.fanfou.com/favicon.ico" />
+    <title>饭否指数</title>
+    <meta name="description" content="饭否指数"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="./css1.css">
-    <script type="text/javascript" src="https://enj0.com/static/jquery.min.js"></script>  
+    <link rel="stylesheet" href="/public/css1.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Fan Trending</h1>
+      <h1 class="project-name">饭否指数</h1>
       
     </section>
 
@@ -37,19 +37,17 @@
 
   <script type="text/javascript">
     function submit(){
-      serverUrl = 'https://fantrending.enj0.com/'
+      serverUrl = '/'
       word = $('#sw').val()
       token = $('#st').val()
       $('#btn').text('已发送,正在处理...')
-      $.get(serverUrl + 'newword?w='+word+'&t='+token, function(data,status){
+      $.get(serverUrl + 'add?w='+word+'&t='+token, function(data,status){
         alert(data)
       })
     }
     
   </script>
 	<footer class="site-footer">
-        
-        <span class="site-footer-credits" style="margin-left:50px;">Made by  <a href="https://blog.zrt.io/">Ruotian Zhang</a>.</span>
       </footer>    
   </body>
 </html>

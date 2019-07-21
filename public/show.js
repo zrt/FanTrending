@@ -1,9 +1,9 @@
-serverUrl = 'https://fantrending.enj0.com/'
+serverUrl = './'
 wordlist = []
 
 function showFanTrending(word){
 	console.log('show '+word)
-	$.get(serverUrl + 'gettrending?w='+word, function(data,status){
+	$.get(serverUrl + 'show?w='+word, function(data,status){
 		datalist = JSON.parse(data)
 		// console.log(datalist)
 		var dom = document.getElementById("container");
@@ -183,7 +183,7 @@ function getQueryString(key){
   return result?decodeURIComponent(result[2]):null;
 }
 $(function(){
-	$.get(serverUrl + 'getlist', function(data,status){
+	$.get(serverUrl + 'list', function(data,status){
 		wordlist = JSON.parse(data)
 		addSel(wordlist)
 		$("#sel").change(function() { selectChange(); });

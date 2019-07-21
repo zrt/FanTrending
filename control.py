@@ -8,7 +8,7 @@ import datetime
 fan = Fan(config['ckey'], config['csecret'])
 fan.xauth(config['myuser'], config['mypass'])
 
-wordlist = {}
+wordlist = []
 state = {}
 mem = {}
 
@@ -18,10 +18,12 @@ def datetimefromstr(s):
     return datetime.datetime.strptime(s, '%a %b %d %H:%M:%S %z %Y')
 
 def get_day_num(s):
-    return int(datetimefromstr(s).strftime('%j'))
+    return int(datetimefromstr(s).timestamp())//SECONDS_PER_DAY
+
+SECONDS_PER_DAY = 60*60*24
 
 def get_today_num():
-    return int(datetime.datetime.today().strftime('%j'))
+    return int(datetime.datetime.now().timestamp())//SECONDS_PER_DAY
 
 def save_all():
     with open('./wordlist.pkl', 'wb') as f:
@@ -42,7 +44,12 @@ def load_all():
     with open('./mem.pkl', 'rb') as f:
         mem = pickle.load(f)
 
-def QiRiNianHua(seq):
+def QiRiNianHua(mp):
+    today = int(datetime.datetime.now().timestamp())//SECONDS_PER_DAY
+    seq = [0]*360
+    for i in range(360):
+        if today - i in mp:
+            seq[360-i-1] = mp[today - i]
     ret = [0]*370
     for i in range(len(seq)):
         if seq[i]>0:
@@ -50,16 +57,19 @@ def QiRiNianHua(seq):
                 ret[i+j] += seq[i]
     for i in range(len(ret)):
         ret[i] *= 52
-    return ret[:367]
+    return ret[:360]
+
 
 def calc_state(word, result):
-    cnt = [0]*367
+    cnt = {}
     for x in result:
-        if datetimefromstr(x).year == 2018:
-            idx = get_day_num(x)
+        idx = int(datetimefromstr(x).timestamp()) // SECONDS_PER_DAY
+        if idx in cnt:
             cnt[idx] += 1
+        else:
+            cnt[idx] = 1
     cnt = QiRiNianHua(cnt)
-    return cnt[1:get_today_num()+1]
+    return cnt
 
 def update(word):
     if word in mem and 'lastupdate' in mem[word] and mem[word]['lastupdate'] == get_today_num():
@@ -73,10 +83,10 @@ def update(word):
         mem[word]['lastid'] = -1
     lastid = mem[word]['lastid']
     latest = fan.request('GET', 'search/public_timeline', {'q':word, 'count':60}, timeout=t_out)
-    cnt = 200
-    while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and datetimefromstr(latest[-1]['created_at']).year >= 2018:
+    cnt = 1000
+    while cnt > 0 and len(latest)>0 and latest[-1]['rawid'] > lastid and get_today_num() - get_day_num(latest[-1]['created_at']) < 360:
         cnt -= 1
-        print(200-cnt)
+        print('get..', 1000-cnt)
         latest += fan.request('GET', 'search/public_timeline', { 'q':word, 'count':60, 'max_id':latest[-1]['id']}, timeout=t_out)[1:]
     
     for x in latest:
@@ -100,8 +110,7 @@ def addword(w):
     load_all()
     if w in wordlist:
     	return
+    update_all()
     wordlist.append(w)
     save_all()
-    update_all()
-
 

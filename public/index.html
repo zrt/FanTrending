@@ -1,23 +1,30 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
-    <title>Fan Trending</title>
-    <meta name="description" content="Fan Trending"/>
+    <link rel="shortcut icon" href="https://static.fanfou.com/favicon.ico" />
+    <title>饭否指数</title>
+    <meta name="description" content="饭否指数"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="./css1.css">
-    <script type="text/javascript" src="https://enj0.com/static/jquery.min.js"></script>
-    <script type="text/javascript" src="./echarts.min.js"></script>
-    <script type="text/javascript" src="./echarts-gl.min.js"></script>
-    <script type="text/javascript" src="./ecStat.min.js"></script>
-    <script type="text/javascript" src="./dataTool.min.js"></script>
-    <script type="text/javascript" src="./simplex.js"></script>
+    <link rel="stylesheet" href="/public/css1.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/public/echarts.min.js"></script>
+    <script type="text/javascript" src="/public/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="/public/ecStat.min.js"></script>
+    <script type="text/javascript" src="/public/dataTool.min.js"></script>
+    <script type="text/javascript" src="/public/simplex.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#sel').select2();
+        });
+    </script>
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Fan Trending</h1>
+      <h1 class="project-name">饭否指数</h1>
       
     </section>
 
@@ -26,22 +33,20 @@
       <div id="container" style="height: 400px"></div>
 
 
-      <span>
+      <p>
         选择现有的Trending:
-        <select id="sel">
+        <select id="sel" style="width: 100%;">
           <option value ="random">...</option>
         </select>
-      </span>
-      <br/>
-      
-      <a href="./add.html">添加你关心的Trending</a>
+      </p>
+      <a href="/public/add.html">添加你关心的Trending</a>
     </section>
 
 	<footer class="site-footer">
-    <span class="site-footer-credits" style="margin-left:50px;">Made by  <a href="https://blog.zrt.io/">Ruotian Zhang</a>.</span>
+    <center>made by <a href="//yeah.moe/fanfou">zrt</a></center>
   </footer>  
 
-  <script type="text/javascript" src="./show.js"></script>
+  <script type="text/javascript" src="/public/show.js"></script>
 
   </body>
 </html>
